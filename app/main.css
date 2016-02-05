@@ -1,0 +1,16 @@
+h1 {
+  color: red;
+}
+
+li span.todo-done {
+  text-decoration: line-through;
+}
+
+li span.todo-text {
+  display: inline-block;
+  width: 6em;
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
