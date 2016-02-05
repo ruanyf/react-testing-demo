@@ -69,6 +69,70 @@ Now run the test, and see the result.
 $ npm test
 ```
 
+## React official Test Utilities
+
+The official testing approach is to use [Test Utilities](https://facebook.github.io/react/docs/test-utils.html).
+
+```javascript
+import TestUtils from 'react-addons-test-utils';
+```
+
+The library provides many useful methods.
+
+### Shallow Rendering
+
+[Shallow Rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) just renders a component "one level deep" without worrying about the behavior of child components, and retures a React Object instance. It does not require a DOM, since the component will not be mounted into DOM.
+
+```javascript
+import TestUtils from 'react-addons-test-utils';
+
+function shallowRender(Component) {
+  const renderer = TestUtils.createRenderer();
+  renderer.render(<Component/>);
+  return renderer.getRenderOutput();
+}
+```
+
+In the code above, we define a function `shallowRender` to return a component's shallow rendering.
+
+The first test case is to test the title of `App`.
+
+```javascript
+it('App\'s title should be Todos', function () {
+  const app = shallowRender(App);
+  expect(app.props.children[0].props.children).to.equal('Todos');
+})
+```
+
+You may feel `app.props.children[0].props.children` intimidating, but it is not. Each React component instance has a `props.children` property which contains its all children components. The first `props.children` of `App` is `h1` element whose `props.children` property is the text of the title.
+
+The second test case is to test `TodoItem` has no `todo-done` class. This time, we modify the function `shallowRender` to receive properties.
+
+```javascript
+import TestUtils from 'react-addons-test-utils';
+
+function shallowRender(Component, props) {
+  const renderer = TestUtils.createRenderer();
+  renderer.render(<Component {...props}/>);
+  return renderer.getRenderOutput();
+}
+```
+
+The following is the test case.
+
+```javascript
+import TodoItem from '../app/components/TodoItem';
+
+let todoItemData = { id: 0, name: 'Todo one', done: false };
+
+describe('Shallow Rendering', function () {
+  it('Todo item should not have todo-done class', function () {
+    const todoItem = shallowRender(TodoItem, {todo: todoItemData});
+    expect(todoItem.props.children[0].props.className.indexOf('todo-done')).to.equal(-1);
+  });
+});
+```
+
 ## Licence
 
 MIT
