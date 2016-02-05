@@ -14,5 +14,5 @@ describe('Shallow Rendering', function () {
     const app = shallowRender(App);
     // component's shallow rendering has props.children
     expect(app.props.children[0].props.children).to.equal('Todos');
-  })
-})
+  });
+});

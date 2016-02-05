@@ -1,32 +1,21 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import jsdom from 'jsdom';
 import TestUtils from 'react-addons-test-utils';
-import { expect } from 'chai';
+import {expect} from 'chai';
 
-import TodoList from '../app/components/TodoList';
+import App from '../app/components/App';
 
-function setupDom() {
-  if (typeof document !== 'undefined') {
-    return;
-  }
-
-  global.document = jsdom.jsdom('<html><body></body></html>');
-  global.window = document.defaultView;
-  global.navigator = window.navigator;
-};
-
-describe('模拟DOM测试', function (done) {
-  it('点击Todo，改变完成状态', function () {
-    setupDom();
-    const todoList = TestUtils.renderIntoDocument(
-      <TodoList/>
-    );
-    const todoItems = TestUtils.scryRenderedDOMComponentsWithTag(todoList, 'li');
-    const todoText = todoItems[0].querySelector('span');
-    let isDone = todoText.classList.contains('todo-done');
-    TestUtils.Simulate.click(todoText);
-    expect(todoText.classList.contains('todo-done')).to.be.equal(!isDone);
+describe('DOM Rendering', function (done) {
+  it('When click the Todo item，it should become done', function () {
+    const app = TestUtils.renderIntoDocument(<App/>);
+    const appDOM = findDOMNode(app);
+    const todoItem = appDOM.querySelector('li:first-child span');
+    let isDone = todoItem.classList.contains('todo-done');
+    TestUtils.Simulate.click(todoItem);
+    expect(todoItem.classList.contains('todo-done')).to.be.equal(!isDone);
+    // make the item returns to previous state
+    TestUtils.Simulate.click(todoItem);
   });
 });
-
 
