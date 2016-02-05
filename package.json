@@ -1,7 +1,7 @@
 {
-  "name": "react-babel-webpack-boilerplate",
+  "name": "react-testing-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tutorial of testing React components",
   "main": "app/main.jsx",
   "scripts": {
     "lint": "eslint 'app/**/*.@(js|jsx)'",
