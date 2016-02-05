@@ -1,15 +1,14 @@
 import React from 'react';
-import todoStore from '../stores/todoStore';
+import TodoStore from '../stores/TodoStore';
 
 export default class AddTodo extends React.Component {
   addTodo() {
-    // e.preventDefault();
     const newTodoName = this.refs.todoTitle.value;
     if (newTodoName) {
-      todoStore.addNewTodo({
+      TodoStore.addNewTodo({
         name: newTodoName
       });
-      todoStore.emitChange();
+      TodoStore.emitChange();
       this.refs.todoTitle.value = '';
     }
   }

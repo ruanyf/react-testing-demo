@@ -4,6 +4,7 @@ h1 {
 
 li span.todo-done {
   text-decoration: line-through;
+  color: green;
 }
 
 li span.todo-text {

@@ -1,17 +1,17 @@
 import React from 'react';
-import todoStore from '../stores/todoStore';
+import TodoStore from '../stores/TodoStore';
 
 export default class Todo extends React.Component {
   toggleDone(e) {
     e.preventDefault();
-    todoStore.toggleDone(this.props.todo.id);
-    todoStore.emitChange();
+    TodoStore.toggleDone(this.props.todo.id);
+    TodoStore.emitChange();
   }
 
   deleteTodo(e) {
     e.preventDefault();
-    todoStore.deleteTodo(this.props.todo.id);
-    todoStore.emitChange();
+    TodoStore.deleteTodo(this.props.todo.id);
+    TodoStore.emitChange();
   }
 
   render() {

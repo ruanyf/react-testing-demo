@@ -1,23 +1,23 @@
 import React from 'react';
-import todoStore from '../stores/todoStore';
+import TodoStore from '../stores/TodoStore';
 import TodoItem from './TodoItem';
 
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = todoStore.getAll();
+    this.state = TodoStore.getAll();
   }
 
   componentDidMount() {
-    todoStore.addChangeListener(this._onChange.bind(this));
+    TodoStore.addChangeListener(this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    todoStore.removeChangeListener(this._onChange.bind(this));
+    TodoStore.removeChangeListener(this._onChange.bind(this));
   }
 
   _onChange() {
-    this.setState(todoStore.getAll());
+    this.setState(TodoStore.getAll());
   }
 
   render() {

@@ -43,9 +43,9 @@
     "webpack-dev-server": "~1.14.0"
   },
   "keywords": [
-    "es6",
-    "web app",
-    "boilerplate"
+    "react",
+    "test",
+    "enzyme"
   ],
   "author": "Ruan Yifeng",
   "license": "MIT",

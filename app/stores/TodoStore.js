@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
 import assign from 'object-assign';
 
-const todoStore = assign({}, EventEmitter.prototype, {
+const TodoStore = assign({}, EventEmitter.prototype, {
   items: {
     todos: [
       { id: 0, name: 'Todo one', done: false },
@@ -52,4 +52,4 @@ const todoStore = assign({}, EventEmitter.prototype, {
   }
 });
 
-export default todoStore;
+export default TodoStore;

@@ -1,34 +1,23 @@
-This repo is a boilerplate for React-Babel-Webpack project. You could use it as a base to build your own web app.
+This repo shows you how to test React component. It is loosely based on Jack Franklin's article ["Testing React Applications"](http://12devsofxmas.co.uk/2015/12/day-2-testing-react-applications/).
 
-## Features
+## Introduction
 
-- Equip with React 0.14, ES6 & Babel 6
-- Lint with ESlint and Airbnb's .eslintrc
-- Build with Webpack
-- Support [hot module replacement](https://webpack.github.io/docs/hot-module-replacement.html)
-- Auto Open a new browser tab when Webpack loads, and reload the page when you modified the code
-- Support git pre-commit hook used to lint and test your code
+We use two testing approaches.
 
-## How to use
+- [React official Test Utilities](https://facebook.github.io/react/docs/test-utils.html)
+- [Airbnb's Enzyme Library](https://github.com/airbnb/enzyme)
 
-First, you should clone the repo and install the dependencies.
+Each approaches have two ways to do the testing.
 
-```bash
-$ git clone git@github.com:ruanyf/react-babel-webpack-boilerplate.git <yourAppName>
-$ cd <yourAppName>
-$ npm install
-```
+- **Shallow Rendering**: render the component into a React Object instance
+- **DOM Rendering**: render the component into a real DOM node
 
-Then, launch the boilerplate app.
+We will cover all of these stuffs.
 
-```bash
-$ npm start
-```
+## Demo
 
-You should see a new browser tap opening and a title of "Hello World" in http://127.0.0.1:8080.
+We use a Todo app as the demo. It contains three components.
 
-From there, you start to develop your own code in the `app` directory. When you finish coding, use `npm run build` or `npm run deploy` to build the static files.
-
-## License
+## Licence
 
 MIT
