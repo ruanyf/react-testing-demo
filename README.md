@@ -266,7 +266,7 @@ describe('Enzyme Render', function () {
 
 ### mount
 
-`mount` is the method to mount your React component into a real DOM node.
+[`mount`](https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md) is the method to mount your React component into a real DOM node.
 
 ```javascript
 describe('Enzyme Mount', function () {
