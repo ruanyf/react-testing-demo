@@ -41,17 +41,11 @@ It contains two components: `<TodoList/>` and `<AddTodo/>`.
 </div>
 ```
 
-Click the Todo item. A line strikes through it. Click again, the line disappear.
+It has some features.
 
-![](app/img/demo-toggle.png)
-
-Click the Delete button. The Todo item is deleted.
-
-![](app/img/demo-delete.png)
-
-Click the Add Todo button. A new Todo item is added.
-
-![](app/img/demo-newitem.png)
+1. Click the Todo item. A line strikes through it, which means it is done. Click again, the line disappear.
+1. Click the Delete button. The Todo item is deleted.
+1. Click the Add Todo button. A new Todo item is added.
 
 ## What to test
 
@@ -106,7 +100,7 @@ it('App\'s title should be Todos', function () {
 
 You may feel `app.props.children[0].props.children` intimidating, but it is not. Each React component instance has a `props.children` property which contains its all children components. The first `props.children` of `App` is `h1` element whose `props.children` property is the text of the title.
 
-The second test case is to test `TodoItem` has no `todo-done` class. This time, we modify the function `shallowRender` to receive properties.
+The second test case is to test `TodoItem` has no `todo-done` class. This time, we modify the function `shallowRender` to accept properties.
 
 ```javascript
 import TestUtils from 'react-addons-test-utils';
