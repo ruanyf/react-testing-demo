@@ -51,9 +51,9 @@ Click the Delete button. The Todo item is deleted.
 
 Click the Add Todo button. A new Todo item is added.
 
-![](app/img/todo-newitem.png)
+![](app/img/demo-newitem.png)
 
-## How to test
+## What to test
 
 There are five test cases of the Todo app.
 
