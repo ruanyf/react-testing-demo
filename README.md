@@ -17,12 +17,12 @@ Now, you visit http://127.0.0.1:8080/, and should see a Todo app.
 There are 5 places to test.
 
 > 1. App's title should be "Todos"
-> 1. After initial loading, none of Todo items should be done
-> 1. Click a Todo item, it should become to be done
+> 1. Initial state of a Todo item should be right (done / undone)
+> 1. Click a Todo item, its state should be toggled (from undone to done, or vice versa)
 > 1. Click a Delete button, the Todo item should be deleted
 > 1. Click the Add Todo button, a new Todo item shoule be added into the TodoList
 
-All [test cases](https://github.com/ruanyf/react-testing-demo/tree/master/test) are written. You run `npm test` to find the test result.
+All [test cases](https://github.com/ruanyf/react-testing-demo/tree/master/test) have been written. You run `npm test` to find the test result.
 
 ```bash
 $ npm test
@@ -111,7 +111,7 @@ describe('Shallow Rendering', function () {
 });
 ```
 
-In the code above, since `TodoItem` is the children component of `App`, we have to call `shallowRender` function with `TodoItem`, otherwise it will not be rendered. In our demo, if the state of a `TodoItem` is undone, the `class` property (`props.className`) will not contain `todo-done`.
+In the code above, since [`TodoItem`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/TodoItem.jsx) is the children component of [`App`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/App.jsx), we have to call `shallowRender` function with `TodoItem`, otherwise it will not be rendered. In our demo, if the state of a `TodoItem` is undone, the `class` property (`props.className`) contains no `todo-done`.
 
 ### renderIntoDocument
 
