@@ -18,45 +18,47 @@ Now, you visit http://127.0.0.1:8080/, and see a Todo app.
 
 There are 5 places we want to test.
 
-1. App's title should be "Todos"
-1. After initial loading, none of Todo items should be done
-1. Click a Todo item, it should become to be done
-1. Click a Delete button, the Todo item should be deleted
-1. Click the Add Todo button, a new Todo item shoule be added into the TodoList
+> 1. App's title should be "Todos"
+> 1. After initial loading, none of Todo items should be done
+> 1. Click a Todo item, it should become to be done
+> 1. Click a Delete button, the Todo item should be deleted
+> 1. Click the Add Todo button, a new Todo item shoule be added into the TodoList
 
-All test cases are written. Run the tests, and see the result.
+All [test cases](https://github.com/ruanyf/react-testing-demo/tree/master/test) are written. Run the tests, and see the result.
 
 ```bash
 $ npm test
 ```
 
-## Understand the Basics
+## Testing Library
 
-We use two testing approaches.
+To test React, you have to use [offical Test Utilities](https://facebook.github.io/react/docs/test-utils.html). But this tool only provides low-level API, as a result, some third-party test libraries are built based on it. Airbnb's [Enzyme library](https://github.com/airbnb/enzyme) is the easiest one to use among them.
 
-- [React official Test Utilities](https://facebook.github.io/react/docs/test-utils.html)
-- [Airbnb's Enzyme Library](https://github.com/airbnb/enzyme)
+Every test case thus has two ways to write.
 
-Each approaches have two ways to do the testing.
+> - Test Utilities' way
+> - Enzeym's way
 
-- **Shallow Rendering**: render the component into a React Object instance
-- **DOM Rendering**: render the component into a real DOM node
-
-We will cover all of these stuffs.
+This repo will show you both of them.
 
 ## React official Test Utilities
 
-The official testing approach is to use [Test Utilities](https://facebook.github.io/react/docs/test-utils.html).
+Since a React component could be rendered into either a virtual DOM object in memory (`React.Component`'s instance) or a real DOM node, Test Utilities library gives you two testing choices.
+
+- **Shallow Rendering**: testing a virtual DOM object
+- **DOM Rendering**: testing a real DOM node
+
+### Shallow Rendering
+
+[Shallow Rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) just renders a component "one level deep" without worrying about the behavior of child components, and retures a virtual DOM object. It does not require a DOM, since the component will not be mounted into DOM.
+
+At first, import the Test Utilities in your test case script.
 
 ```javascript
 import TestUtils from 'react-addons-test-utils';
 ```
 
-The library provides many useful methods.
-
-### Shallow Rendering
-
-[Shallow Rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) just renders a component "one level deep" without worrying about the behavior of child components, and retures a React Object instance. It does not require a DOM, since the component will not be mounted into DOM.
+Then, write a Shallow Rendering function.
 
 ```javascript
 import TestUtils from 'react-addons-test-utils';
