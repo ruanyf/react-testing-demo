@@ -28,6 +28,19 @@ All [test cases](https://github.com/ruanyf/react-testing-demo/tree/master/test) 
 $ npm test
 ```
 
+## Index
+
+- [Testing Library](#testing-library)
+- [React official Test Utilities](#react-official-test-utilities)
+  1. [Shallow Rendering](#shallow-rendering)
+  1. [renderIntoDocument](#renderintodocument)
+  1. [findDOMNode](#finddomnode)
+- [Enzyme Library](#enzyme-library)
+  1. [shallow](#shallow)
+  1. [render](#render)
+  1. [mount](#mount)
+- [License](#license)
+
 ## Testing Library
 
 The most important tool of testing React is [offical Test Utilities](https://facebook.github.io/react/docs/test-utils.html). But this tool only provides low-level API, as a result, some third-party test libraries are built based on it. Airbnb's [Enzyme library](https://github.com/airbnb/enzyme) is the easiest one to use among them.
@@ -81,7 +94,7 @@ describe('Shallow Rendering', function () {
 });
 ```
 
-You may feel `app.props.children[0].props.children` intimidating, but it is not. Each virtual DOM object has a `props.children` property which contains its all children components. The first `props.children` of `App` is the title whose `props.children` property is the text of the title.
+You may feel `app.props.children[0].props.children` intimidating, but it is not. Each virtual DOM object has a `props.children` property which contains its all children components. `app.props.children[0]` is the title whose `props.children` is the text of the title.
 
 The second [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow2.test.js) is to test the initial state of a `TodoItem` is undone.
 
