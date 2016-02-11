@@ -32,13 +32,14 @@ $ npm test
 
 - [Testing Library](#testing-library)
 - [React official Test Utilities](#react-official-test-utilities)
-  1. [Shallow Rendering](#shallow-rendering)
-  1. [renderIntoDocument](#renderintodocument)
-  1. [findDOMNode](#finddomnode)
+  - [Shallow Rendering](#shallow-rendering)
+  - [renderIntoDocument](#renderintodocument)
+  - [findDOMNode](#finddomnode)
 - [Enzyme Library](#enzyme-library)
-  1. [shallow](#shallow)
-  1. [render](#render)
-  1. [mount](#mount)
+  - [shallow](#shallow)
+  - [render](#render)
+  - [mount](#mount)
+  - [API List](#api-list)
 - [License](#license)
 
 ## Testing Library
@@ -89,12 +90,13 @@ The [first test case](https://github.com/ruanyf/react-testing-demo/blob/master/t
 describe('Shallow Rendering', function () {
   it('App\'s title should be Todos', function () {
     const app = shallowRender(App);
+    expect(app.props.children[0].type).to.equal('h1');
     expect(app.props.children[0].props.children).to.equal('Todos');
   });
 });
 ```
 
-You may feel `app.props.children[0].props.children` intimidating, but it is not. Each virtual DOM object has a `props.children` property which contains its all children components. `app.props.children[0]` is the title whose `props.children` is the text of the title.
+You may feel `app.props.children[0].props.children` intimidating, but it is not. Each virtual DOM object has a `props.children` property which contains its all children components. `app.props.children[0]` is the `h1` element whose `props.children` is the text of `h1`.
 
 The second [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow2.test.js) is to test the initial state of a `TodoItem` is undone.
 
@@ -140,11 +142,13 @@ const app = TestUtils.renderIntoDocument(<App/>);
 `renderIntoDocument` method requires a DOM, otherwise throws an error. Before running the test case, DOM environment (includes `window`, `document` and `navigator` Object) should be available. So we use [jsdom](https://github.com/tmpvar/jsdom) to implement the DOM environment.
 
 ```javascript
-var jsdom = require("jsdom");
+import jsdom from 'jsdom';
 
-global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-global.window = document.defaultView;
-global.navigator = global.window.navigator;
+if (typeof document === 'undefined') {
+  global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+  global.window = document.defaultView;
+  global.navigator = global.window.navigator;
+}
 ```
 
 We save the code above into [`test/setup.js`](https://github.com/ruanyf/react-testing-demo/blob/master/test/setup.js). Then modify `package.json`.
@@ -260,6 +264,17 @@ describe('Enzyme Shallow', function () {
 
 In the code above, `shallow` method returns the shallow rendering of `App`, and `app.find` method returns its `h1` element, and `text` method returns the element's text.
 
+Please keep in mind that `.find` method only supports simple selectors. When meeting complex selectors, it returns no results.
+
+```bash
+component.find('.my-class'); // by class name
+component.find('#my-id'); // by id
+component.find('td'); // by tag
+component.find('div.custom-class'); // by compound selector
+component.find(TableRow); // by constructor
+component.find('TableRow'); // by display name
+```
+
 ### render
 
 [`render`](https://github.com/airbnb/enzyme/blob/master/docs/api/render.md) is used to render react components to static HTML and analyze the resulting HTML structure. It returns a wrapper very similar to `shallow`; however, render uses a third party HTML parsing and traversal library Cheerio. This means it returns a CheerioWrapper.
@@ -286,11 +301,15 @@ In the code above, you should see, no matter a ShallowWapper or a CheerioWrapper
 The following is the third [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L21) to test the delete button.
 
 ```javascript
-it('Delete Todo', function () {
-  let app = mount(<App/>);
-  let todoLength = app.find('li').length;
-  app.find('button.delete').at(0).simulate('click');
-  expect(app.find('li').length).to.equal(todoLength - 1);
+import {mount} from 'enzyme';
+
+describe('Enzyme Mount', function () {
+  it('Delete Todo', function () {
+    let app = mount(<App/>);
+    let todoLength = app.find('li').length;
+    app.find('button.delete').at(0).simulate('click');
+    expect(app.find('li').length).to.equal(todoLength - 1);
+  });
 });
 ```
 
@@ -299,26 +318,51 @@ In the code above, `find` method returns an object containing all eligible child
 The following is the fourth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L28) to test the toggle behaviour of a Todo item.
 
 ```javascript
-it('Turning a Todo item into Done', function () {
-  let app = mount(<App/>);
-  let todoItem = app.find('.todo-text').at(0);
-  todoItem.simulate('click');
-  expect(todoItem.hasClass('todo-done')).to.equal(true);
+import {mount} from 'enzyme';
+
+describe('Enzyme Mount', function () {
+  it('Turning a Todo item into Done', function () {
+    let app = mount(<App/>);
+    let todoItem = app.find('.todo-text').at(0);
+    todoItem.simulate('click');
+    expect(todoItem.hasClass('todo-done')).to.equal(true);
+  });
 });
 ```
 
 The following is the fifth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L35) to test the `Add Todo` button.
 
 ```javascript
-it('Add a new Todo', function () {
-  let app = mount(<App/>);
-  let todoLength = app.find('li').length;
-  let addInput = app.find('input').get(0);
-  addInput.value = 'Todo Four';
-  app.find('.add-button').simulate('click');
-  expect(app.find('li').length).to.equal(todoLength + 1);
+import {mount} from 'enzyme';
+
+describe('Enzyme Mount', function () {
+  it('Add a new Todo', function () {
+    let app = mount(<App/>);
+    let todoLength = app.find('li').length;
+    let addInput = app.find('input').get(0);
+    addInput.value = 'Todo Four';
+    app.find('.add-button').simulate('click');
+    expect(app.find('li').length).to.equal(todoLength + 1);
+  });
 });
 ```
+
+### API List
+
+The following is an incomplete list of Enzyme API. It should give you a general concept of Enzyme's usage.
+
+- `.get(index)`: Returns the node at the provided index of the current wrapper
+- `.at(index)`: Returns a wrapper of the node at the provided index of the current wrapper
+- `.first()`: Returns a wrapper of the first node of the current wrapper
+- `.last()`: Returns a wrapper of the last node of the current wrapper
+- `.type()`: Returns the type of the current node of the wrapper
+- `.text()`: Returns a string representation of the text nodes in the current render tree
+- `.html()`: Returns a static HTML rendering of the current node
+- `.props()`: Returns the props of the root component
+- `.prop(key)`: Returns the named prop of the root component
+- `.state([key])`: Returns the state of the root component
+- `.setState(nextState)`: Manually sets state of the root component
+- `.setProps(nextProps)`: Manually sets props of the root component
 
 ## Licence
 
