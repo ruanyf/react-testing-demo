@@ -44,9 +44,9 @@ $ npm test
 
 ## Testing Library
 
-The most important tool of testing React is [offical Test Utilities](https://facebook.github.io/react/docs/test-utils.html). But this tool only provides low-level API, as a result, some third-party test libraries are built based on it. Airbnb's [Enzyme library](https://github.com/airbnb/enzyme) is the easiest one to use among them.
+The most important tool of testing React is [official Test Utilities](https://facebook.github.io/react/docs/test-utils.html), but it only provides low-level API. As a result, some third-party test libraries are built based on it. Airbnb's [Enzyme library](https://github.com/airbnb/enzyme) is the easiest one to use among them.
 
-Every test case thus has two ways to write.
+Thus every test case has at least two ways to write.
 
 > - Test Utilities' way
 > - Enzeym's way
@@ -55,7 +55,7 @@ This repo will show you both of them.
 
 ## React official Test Utilities
 
-Since a React component could be rendered into either a virtual DOM object in memory (`React.Component`'s instance) or a real DOM node, Test Utilities library gives you two testing choices.
+Since a component could be rendered into either a virtual DOM object (`React.Component`'s instance) or a real DOM node, [Test Utilities](https://facebook.github.io/react/docs/test-utils.html) library gives you two testing choices.
 
 > - **Shallow Rendering**: testing a virtual DOM object
 > - **DOM Rendering**: testing a real DOM node
@@ -98,7 +98,7 @@ describe('Shallow Rendering', function () {
 
 You may feel `app.props.children[0].props.children` intimidating, but it is not. Each virtual DOM object has a `props.children` property which contains its all children components. `app.props.children[0]` is the `h1` element whose `props.children` is the text of `h1`.
 
-The second [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow2.test.js) is to test the initial state of a `TodoItem` is undone.
+The [second test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow2.test.js) is to test the initial state of a `TodoItem` is undone.
 
 At first, we should modify the function `shallowRender` to accept second parameter.
 
@@ -163,7 +163,7 @@ We save the code above into [`test/setup.js`](https://github.com/ruanyf/react-te
 
 Now every time we run `npm test`, `setup.js` will be required into test script to run together.
 
-The third [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom1.test.js) is to test the delete button.
+The [third test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom1.test.js) is to test the delete button.
 
 ```javascript
 describe('DOM Rendering', function () {
@@ -197,7 +197,7 @@ These methods is hard to spell. Luckily, we have another way to find DOM nodes f
 
 If a React component has been mounted into the DOM, `react-dom` module's `findDOMNode` method returns the corresponding native browser DOM element.
 
-We use it to write the fourth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom2.test.js). It is to test the toggle dehavior when a user clicks the Todo item.
+We use it to write the [fourth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom2.test.js). It is to test the toggle dehavior when a user clicks the Todo item.
 
 ```javascript
 import {findDOMNode} from 'react-dom';
@@ -216,7 +216,7 @@ describe('DOM Rendering', function (done) {
 
 In the code above, `findDOMNode` method returns `App`'s DOM node. Then we find out the first `li` element in it, and simulate a click action upon it. Last, we expect the `todo-done` class in `todoItem.classList` toggling.
 
-The fifth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom3.test.js) is to test adding a new Todo item.
+The [fifth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom3.test.js) is to test adding a new Todo item.
 
 ```javascript
 describe('DOM Rendering', function (done) {
@@ -249,7 +249,7 @@ It provides three ways to do the testing.
 
 [shallow](https://github.com/airbnb/enzyme/blob/master/docs/api/shallow.md) is a wrapper of Test Utilities' shallow rendering.
 
-The following is the first [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L6) to test App's title.
+The following is the [first test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L6) to test App's title.
 
 ```javascript
 import {shallow} from 'enzyme';
@@ -279,7 +279,7 @@ component.find('TableRow'); // by display name
 
 [`render`](https://github.com/airbnb/enzyme/blob/master/docs/api/render.md) is used to render react components to static HTML and analyze the resulting HTML structure. It returns a wrapper very similar to `shallow`; however, render uses a third party HTML parsing and traversal library Cheerio. This means it returns a CheerioWrapper.
 
-The following is the second [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L13) to test the initial state of Todo items.
+The following is the [second test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L13) to test the initial state of Todo items.
 
 ```javascript
 import {render} from 'enzyme';
@@ -298,7 +298,7 @@ In the code above, you should see, no matter a ShallowWapper or a CheerioWrapper
 
 [`mount`](https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md) is the method to mount your React component into a real DOM node.
 
-The following is the third [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L21) to test the delete button.
+The following is the [third test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L21) to test the delete button.
 
 ```javascript
 import {mount} from 'enzyme';
@@ -315,7 +315,7 @@ describe('Enzyme Mount', function () {
 
 In the code above, `find` method returns an object containing all eligible children components. `at` method returns the child component at the specified position and `simulate` method simulates some action upon it.
 
-The following is the fourth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L28) to test the toggle behaviour of a Todo item.
+The following is the [fourth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L28) to test the toggle behaviour of a Todo item.
 
 ```javascript
 import {mount} from 'enzyme';
@@ -330,7 +330,7 @@ describe('Enzyme Mount', function () {
 });
 ```
 
-The following is the fifth [test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L35) to test the `Add Todo` button.
+The following is the [fifth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L35) to test the `Add Todo` button.
 
 ```javascript
 import {mount} from 'enzyme';
