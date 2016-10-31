@@ -49,7 +49,7 @@ The most important tool of testing React is [official Test Utilities](https://fa
 Thus every test case has at least two ways to write.
 
 > - Test Utilities' way
-> - Enzeym's way
+> - Enzyme's way
 
 This repo will show you both of them.
 
