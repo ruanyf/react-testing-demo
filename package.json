@@ -32,7 +32,7 @@
     "eslint-config-airbnb": "~1.0.0",
     "eslint-plugin-react": "~3.10.0",
     "jsdom": "^7.2.2",
-    "jsx-test": "^0.8.2",
+    "jsx-test": "~2.1.0",
     "mocha": "^2.3.4",
     "object-assign": "^4.0.1",
     "open-browser-webpack-plugin": "0.0.1",
