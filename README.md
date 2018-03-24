@@ -8,6 +8,7 @@ This repo shows you how to test React component. It is loosely based on Jack Fra
 $ git clone https://github.com/ruanyf/react-testing-demo.git
 $ cd react-testing-demo && npm install
 $ npm start
+$ open http://127.0.0.1:8080
 ```
 
 Now, you visit http://127.0.0.1:8080/, and should see a Todo app.
@@ -20,7 +21,7 @@ There are 5 places to test.
 > 1. Initial state of a Todo item should be right ("done" or "undone")
 > 1. Click a Todo item, its state should be toggled (from "undone" to "done", or vice versa)
 > 1. Click a Delete button, the Todo item should be deleted
-> 1. Click the Add Todo button, a new Todo item shoule be added into the TodoList
+> 1. Click the Add Todo button, a new Todo item should be added into the TodoList
 
 All [test cases](https://github.com/ruanyf/react-testing-demo/tree/master/test) have been written. You run `npm test` to find the test result.
 
@@ -49,7 +50,7 @@ The most important tool of testing React is [official Test Utilities](https://fa
 Thus every test case has at least two ways to write.
 
 > - Test Utilities' way
-> - Enzeym's way
+> - Enzyme's way
 
 This repo will show you both of them.
 
@@ -62,7 +63,7 @@ Since a component could be rendered into either a virtual DOM object (`React.Com
 
 ### Shallow Rendering
 
-[Shallow Rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) just renders a component "one level deep" without worrying about the behavior of child components, and retures a virtual DOM object. It does not require a DOM, since the component will not be mounted into DOM.
+[Shallow Rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) just renders a component "one level deep" without worrying about the behavior of child components, and returns a virtual DOM object. It does not require a DOM, since the component will not be mounted into DOM.
 
 At first, import the Test Utilities in your test case script.
 
@@ -84,7 +85,7 @@ function shallowRender(Component) {
 
 In the code above, we define a function `shallowRender` to return a component's shallow rendering.
 
-The [first test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow1.test.js) is to test the title of `App`. It needn't interact with DOM and doesn't involve child-components, so is best suitable for the use of shadow rendering.
+The [first test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/shallow1.test.js) is to test the title of `App`. It needn't interact with DOM and doesn't involve child-components, so is most suitable for use with shadow rendering.
 
 ```javascript
 describe('Shallow Rendering', function () {
@@ -126,7 +127,7 @@ describe('Shallow Rendering', function () {
 });
 ```
 
-In the code above, since [`TodoItem`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/TodoItem.jsx) is the children component of [`App`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/App.jsx), we have to call `shallowRender` function with `TodoItem`, otherwise it will not be rendered. In our demo, if the state of a `TodoItem` is undone, the `class` property (`props.className`) contains no `todo-done`.
+In the code above, since [`TodoItem`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/TodoItem.jsx) is a child component of [`App`](https://github.com/ruanyf/react-testing-demo/blob/master/app/components/App.jsx), we have to call `shallowRender` function with `TodoItem`, otherwise it will not be rendered. In our demo, if the state of a `TodoItem` is undone, the `class` property (`props.className`) contains no `todo-done`.
 
 ### renderIntoDocument
 
@@ -179,7 +180,7 @@ describe('DOM Rendering', function () {
 });
 ```
 
-In the code above, first, `scryRenderedDOMComponentsWithTag` method finds all `li` elements of the `app` component. Next, get out `todoItems[0]` and find the delete button from it. Then use `TestUtils.Simulate.click` to simulate the click action upon it. Last, expect the new number of all `li` elements should be less one than the old number.
+In the code above, first, `scryRenderedDOMComponentsWithTag` method finds all `li` elements of the `app` component. Next, get out `todoItems[0]` and find the delete button from it. Then use `TestUtils.Simulate.click` to simulate the click action upon it. Last, expect the new number of all `li` elements to be less one than the old number.
 
 Test Utilities provides many methods to find DOM elements from a React component.
 
@@ -191,13 +192,13 @@ Test Utilities provides many methods to find DOM elements from a React component
 > - [findRenderedComponentWithType](https://facebook.github.io/react/docs/test-utils.html#findrenderedcomponentwithtype): Same as scryRenderedComponentsWithType() but expects there to be one result and returns that one result, or throws exception if there is any other number of matches besides one.
 > - [findAllInRenderedTree](https://facebook.github.io/react/docs/test-utils.html#findallinrenderedtree): Traverse all components in tree and accumulate all components where test(component) is true.
 
-These methods is hard to spell. Luckily, we have another way to find DOM nodes from a React component.
+These methods are hard to spell. Luckily, we have another more concise ways to find DOM nodes from a React component.
 
 ### findDOMNode
 
 If a React component has been mounted into the DOM, `react-dom` module's `findDOMNode` method returns the corresponding native browser DOM element.
 
-We use it to write the [fourth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom2.test.js). It is to test the toggle dehavior when a user clicks the Todo item.
+We use it to write the [fourth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom2.test.js). It is to test the toggle behavior when a user clicks the Todo item.
 
 ```javascript
 import {findDOMNode} from 'react-dom';
@@ -214,7 +215,7 @@ describe('DOM Rendering', function (done) {
 });
 ```
 
-In the code above, `findDOMNode` method returns `App`'s DOM node. Then we find out the first `li` element in it, and simulate a click action upon it. Last, we expect the `todo-done` class in `todoItem.classList` toggling.
+In the code above, `findDOMNode` method returns `App`'s DOM node. Then we find out the first `li` element in it, and simulate a click action upon it. Last, we expect the `todo-done` class in `todoItem.classList` to toggle.
 
 The [fifth test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/dom3.test.js) is to test adding a new Todo item.
 
@@ -233,7 +234,7 @@ describe('DOM Rendering', function (done) {
 });
 ```
 
-In the code above, at first, we find the `input` box and add a value into it. Then, we find the `Add Todo` button and simulate the click action upon it. Last, we expect the new Todo item should be appended into the Todo list.
+In the code above, at first, we find the `input` box and add a value into it. Then, we find the `Add Todo` button and simulate the click action upon it. Last, we expect the new Todo item to be appended into the Todo list.
 
 ## Enzyme Library
 
@@ -277,7 +278,7 @@ component.find('TableRow'); // by display name
 
 ### render
 
-[`render`](https://github.com/airbnb/enzyme/blob/master/docs/api/render.md) is used to render react components to static HTML and analyze the resulting HTML structure. It returns a wrapper very similar to `shallow`; however, render uses a third party HTML parsing and traversal library Cheerio. This means it returns a CheerioWrapper.
+[`render`](https://github.com/airbnb/enzyme/blob/master/docs/api/render.md) is used to render React components to static HTML and analyze the resulting HTML structure. It returns a wrapper very similar to `shallow`; however, render uses a third party HTML parsing and traversal library Cheerio. This means it returns a CheerioWrapper.
 
 The following is the [second test case](https://github.com/ruanyf/react-testing-demo/blob/master/test/enzyme1.test.js#L13) to test the initial state of Todo items.
 
@@ -292,7 +293,7 @@ describe('Enzyme Render', function () {
 });
 ```
 
-In the code above, you should see, no matter a ShallowWapper or a CheerioWrapper, enzyme make them have the same API (`find` method).
+In the code above, you should see, no matter a ShallowWapper or a CheerioWrapper, Enzyme provides them with the same API (`find` method).
 
 ### mount
 
